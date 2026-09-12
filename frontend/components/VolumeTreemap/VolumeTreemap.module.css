@@ -1,0 +1,495 @@
+.treemapCardContainer {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 1. Header Bar: Two spacious tiers */
+.treemapHeader {
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background: #ffffff;
+}
+
+.headerTopRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.iconBadge {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: #0b0f15;
+  color: var(--accent-lime, #c6f10e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mainTitle {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: 0.02em;
+  margin: 0;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.windowPill {
+  font-size: 0.55rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: #0284c7;
+  background: rgba(2, 132, 199, 0.1);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.headerRightBadge {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.liveStreamBadge {
+  font-size: 0.58rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: #15803d;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.28);
+  padding: 2px 7px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.liveBadgeNew {
+  background: rgba(198, 241, 14, 0.2) !important;
+  color: #111827 !important;
+  border-color: #c6f10e !important;
+  animation: liveBadgePulse 1.2s ease-in-out infinite alternate;
+}
+
+.liveBadgeRisk {
+  background: rgba(244, 63, 94, 0.2) !important;
+  color: #be123c !important;
+  border-color: #f43f5e !important;
+  animation: liveBadgePulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes liveBadgePulse {
+  0% { transform: scale(1); filter: brightness(1); }
+  100% { transform: scale(1.04); filter: brightness(1.2); }
+}
+
+.liveDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 5px #22c55e;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+.headerBottomRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.subTitle {
+  font-size: 0.64rem;
+  color: #64748b;
+  margin: 0;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* 2. Filter Buttons */
+.filterPills {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+
+.filterBtn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+.filterActiveDark {
+  background: #0f172a !important;
+  color: #ffffff !important;
+  border-color: #0f172a !important;
+}
+
+.filterFlagged {
+  color: #be123c;
+}
+
+.filterActiveRed {
+  background: #be123c !important;
+  color: #ffffff !important;
+  border-color: #be123c !important;
+}
+
+/* 3. True Square Box Canvas: aspect-ratio 1 / 1 */
+.matrixWrapper {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #06090d;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.treemapSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.tileGroup {
+  cursor: pointer;
+}
+
+.volumeRect {
+  transition: x 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              y 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              width 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              fill 0.2s ease,
+              stroke-width 0.15s ease,
+              stroke 0.15s ease;
+}
+
+.volumeRect:hover {
+  filter: brightness(1.25) drop-shadow(0 0 6px rgba(198, 241, 14, 0.5));
+}
+
+.rectFlash {
+  animation: flashHighlight 2.4s ease-out;
+}
+
+@keyframes flashHighlight {
+  0% {
+    filter: brightness(1.8) drop-shadow(0 0 12px #c6f10e);
+  }
+  50% {
+    filter: brightness(1.4) drop-shadow(0 0 6px #c6f10e);
+  }
+  100% {
+    filter: none;
+  }
+}
+
+.beaconRing {
+  animation: beaconPulse 2.2s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes beaconPulse {
+  0% {
+    opacity: 1;
+    stroke-width: 3;
+    filter: drop-shadow(0 0 8px #c6f10e);
+  }
+  50% {
+    opacity: 0.6;
+    stroke-width: 2;
+    filter: drop-shadow(0 0 14px #c6f10e);
+  }
+  100% {
+    opacity: 0.1;
+    stroke-width: 1;
+    filter: none;
+  }
+}
+
+/* 4. Perfectly Structured Floating Tooltip Attached to Cursor Outside the Box */
+.treemapTooltip {
+  position: fixed;
+  background: rgba(11, 17, 28, 0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.65), 0 0 1px rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  padding: 10px 14px;
+  z-index: 99999;
+  pointer-events: none;
+  min-width: 220px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: tooltipFade 0.1s ease-out;
+}
+
+@keyframes tooltipFade {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tooltipTopRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.tooltipName {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #f8fafc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.tooltipBadge {
+  font-size: 0.56rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-sans);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.badgeSafe {
+  background: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.badgeCommercial {
+  background: rgba(56, 189, 248, 0.2);
+  color: #7dd3fc;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.badgeHighValue {
+  background: rgba(198, 241, 14, 0.25);
+  color: #bef264;
+  border: 1px solid rgba(198, 241, 14, 0.35);
+}
+
+.badgeWarning {
+  background: rgba(249, 115, 22, 0.25);
+  color: #fdba74;
+  border: 1px solid rgba(249, 115, 22, 0.35);
+}
+
+.badgeFlagged {
+  background: rgba(244, 63, 94, 0.25);
+  color: #fca5a5;
+  border: 1px solid rgba(244, 63, 94, 0.35);
+}
+
+.tooltipAmtRow {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 5px;
+  white-space: nowrap;
+}
+
+.tooltipAmtVal {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #c6f10e;
+  font-family: var(--font-mono);
+  letter-spacing: -0.02em;
+}
+
+.tooltipShareVal {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tooltipMetaGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.metaLabel {
+  font-size: 0.62rem;
+  color: #64748b;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.metaValue {
+  font-size: 0.68rem;
+  color: #e2e8f0;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.metaCode {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: #93c5fd;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.metaExpiry {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: #fbbf24;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.metaRiskLow {
+  font-size: 0.65rem;
+  color: #4ade80;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.metaRiskHigh {
+  font-size: 0.65rem;
+  color: #f43f5e;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* 5. Footer */
+.treemapFooter {
+  padding: 8px 12px;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.footerStatsGroup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.footerStatItem {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.statLabel {
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.statValBold {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #0f172a;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+.footerLegendGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.62rem;
+  color: #475569;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.legendDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}

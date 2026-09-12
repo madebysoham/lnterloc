@@ -1,0 +1,1907 @@
+.flowChartContainer {
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 100px);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  overflow: hidden;
+  animation: flowFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  position: relative;
+  user-select: none;
+}
+
+@keyframes flowFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 1. Header Bar: Minimalist Back button with Manual Sync, Freeze/Unfreeze, and Ban/Unban section */
+.flowHeader {
+  padding: 8px 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  z-index: 20;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.headerLeftGroup {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+
+.headerRightGroup {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: var(--font-sans);
+  white-space: nowrap;
+}
+
+.backButton:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  transform: translateX(-2px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.headerDivider {
+  width: 1px;
+  height: 20px;
+  background: #e2e8f0;
+  margin: 0 2px;
+  flex-shrink: 0;
+}
+
+/* Header Action Buttons (Sync, Freeze/Unfreeze, Ban/Unban) */
+.headerActionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #1e293b;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4.5px 9px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: var(--font-sans);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  white-space: nowrap;
+}
+
+.headerActionBtn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+}
+
+.headerActionBtn:active {
+  transform: translateY(0);
+}
+
+.headerActionBtnSyncing {
+  border-color: #38bdf8 !important;
+  background: #f0f9ff !important;
+  color: #0284c7 !important;
+}
+
+.spinIcon {
+  animation: spinSlow 0.9s linear infinite;
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.headerActionBadge {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: #f1f5f9;
+  color: #64748b;
+  padding: 1px 5px;
+  border-radius: 5px;
+}
+
+.headerActionBtnFrozen {
+  background: #f0fdf4 !important;
+  border-color: #86efac !important;
+  color: #166534 !important;
+}
+
+.headerActionBtnFreeze {
+  background: #fff1f2 !important;
+  border-color: #fecdd3 !important;
+  color: #be123c !important;
+}
+
+.headerActionBtnBanned {
+  background: #fdf2f8 !important;
+  border-color: #fbcfe8 !important;
+  color: #9d174d !important;
+}
+
+.headerActionBtnNeutral {
+  background: #ffffff;
+  color: #334155;
+}
+
+.headerActionStatusPill {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 1.5px 6px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+}
+
+.statusPillFrozen {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.statusPillActive {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.statusPillBanned {
+  background: #fce7f3;
+  color: #be185d;
+}
+
+.statusPillNeutral {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.headerSecurityPosture {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.70rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.postureDotFrozen {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.postureDotAlert {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f43f5e;
+  animation: pulseDot 1.4s infinite ease-in-out;
+  box-shadow: 0 0 8px #f43f5e;
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+.postureText {
+  font-family: var(--font-sans);
+  letter-spacing: 0.01em;
+}
+
+/* Breadcrumbs Hop Trail */
+.breadcrumbsList {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  max-width: 480px;
+  overflow-x: auto;
+}
+
+.breadcrumbBtn {
+  background: transparent;
+  border: none;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  padding: 3px 8px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  font-family: var(--font-sans);
+  white-space: nowrap;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.breadcrumbBtn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.breadcrumbActive {
+  color: #0284c7 !important;
+  font-weight: 800;
+  background: rgba(2, 132, 199, 0.1);
+}
+
+.breadcrumbSeparator {
+  color: #cbd5e1;
+  font-size: 0.75rem;
+  font-weight: 700;
+  user-select: none;
+}
+
+/* Sub-Transaction Depth Level Pill */
+.hopLevelPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-family: var(--font-mono), monospace;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.hopLevelFinalPill {
+  background: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+  color: #047857 !important;
+}
+
+.treeActionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: var(--font-sans);
+}
+
+.treeActionBtn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.hopLevelText strong {
+  font-weight: 800;
+}
+
+.headerEntityPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  font-size: 0.76rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.entityName {
+  font-weight: 700;
+  color: #0f172a;
+  font-family: var(--font-sans);
+}
+
+.entityDot {
+  color: #94a3b8;
+  font-size: 0.8rem;
+}
+
+.entityStatusHealthy {
+  color: #059669;
+  font-weight: 700;
+  font-size: 0.72rem;
+  display: inline-flex;
+  align-items: center;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+
+.entityStatusRisk {
+  color: #e11d48;
+  font-weight: 700;
+  font-size: 0.72rem;
+  display: inline-flex;
+  align-items: center;
+  background: rgba(225, 29, 72, 0.1);
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+
+/* 2. Main Roamable SVG Canvas Space with Seamless Edge-to-Edge Grid Pattern */
+.svgCanvasWrapper {
+  flex: 1;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.045) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center center;
+  min-height: 520px;
+}
+
+.grabCursor {
+  cursor: grab;
+}
+
+.isDraggingCursor {
+  cursor: grabbing !important;
+}
+
+.flowSvgCanvas {
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  display: block;
+}
+
+/* Floating Camera Nav Controls (Top-Right) */
+.canvasControlOverlay {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  z-index: 15;
+  pointer-events: none;
+}
+
+.navButtonGroup {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  padding: 3px 6px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.navBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 5px 7px;
+  min-width: 26px;
+  height: 26px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.navBtn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.zoomPercentText {
+  font-size: 0.68rem;
+  font-weight: 700;
+  font-family: var(--font-mono), monospace;
+  color: #0f172a;
+  padding: 0 4px;
+  min-width: 38px;
+  text-align: center;
+}
+
+.navDivider {
+  width: 1px;
+  height: 14px;
+  background: #e2e8f0;
+  margin: 0 2px;
+}
+
+.resetLabel {
+  font-size: 0.68rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+}
+
+/* Pipe Interactive Animations & Visibility Filtering */
+.pipeGroup {
+  cursor: pointer;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease;
+}
+
+.pipeVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.pipeHidden {
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+.animatedStreamPath {
+  stroke-dasharray: 8 6;
+  animation: streamFlow 1.6s linear infinite;
+}
+
+@keyframes streamFlow {
+  from {
+    stroke-dashoffset: 28;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Endpoint Dot Target Group & Interactive Pulsing */
+.endpointTargetGroup {
+  cursor: pointer;
+}
+
+.endpointCircleExpanded {
+  filter: drop-shadow(0 0 10px rgba(2, 132, 199, 0.95)) !important;
+  stroke: #ffffff !important;
+  stroke-width: 2.5px !important;
+}
+
+.tierGuideTitle {
+  font-size: 10px;
+  font-weight: 800;
+  font-family: var(--font-mono), monospace;
+  fill: #64748b;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.endpointTargetGroup:hover .endpointCircle {
+  r: 6.5px !important;
+  stroke-width: 2.5px !important;
+  filter: drop-shadow(0 0 10px rgba(2, 132, 199, 0.9)) !important;
+}
+
+.endpointPulseRing {
+  animation: endpointPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes endpointPulse {
+  0% {
+    r: 4.5px;
+    opacity: 0.9;
+    stroke-width: 1.5px;
+  }
+  50% {
+    r: 9.5px;
+    opacity: 0.35;
+    stroke-width: 1px;
+  }
+  100% {
+    r: 13px;
+    opacity: 0;
+    stroke-width: 0.5px;
+  }
+}
+
+.pipeGroup:hover .endpointCircle {
+  filter: drop-shadow(0 0 6px rgba(2, 132, 199, 0.7));
+}
+
+/* Node Text Labels */
+.svgNodeLabelLeft {
+  pointer-events: none;
+  user-select: none;
+}
+
+.svgNodeLabelRight {
+  pointer-events: auto;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.15s ease;
+}
+
+.svgNodeLabelRight:hover {
+  filter: brightness(1.1);
+}
+
+.svgNodeLabelExpanded {
+  pointer-events: auto;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.expandedLabelRect {
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08));
+  transition: all 0.18s ease;
+}
+
+.svgNodeLabelExpanded:hover .expandedLabelRect {
+  fill: #ffffff !important;
+  filter: drop-shadow(0 4px 12px rgba(2, 132, 199, 0.25));
+  stroke-width: 1.8px !important;
+}
+
+.svgLabelTitle {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--font-sans), sans-serif;
+  letter-spacing: -0.01em;
+  paint-order: stroke fill;
+  stroke: #ffffff;
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+.labelTitleLight {
+  fill: #0f172a;
+}
+
+.labelPrimary {
+  fill: #0284c7 !important;
+  font-weight: 800;
+}
+
+.labelRisk {
+  fill: #e11d48 !important;
+}
+
+.svgLabelMeta {
+  font-size: 8.5px;
+  font-family: var(--font-mono), monospace;
+  letter-spacing: 0.01em;
+  paint-order: stroke fill;
+  stroke: #ffffff;
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
+}
+
+/* Central Mixing Circle Node */
+.centralEntityGroup {
+  cursor: pointer;
+}
+
+.centralHaloCircle {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.centralCoreCircle {
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.centralInnerDot {
+  pointer-events: none;
+}
+
+.centralEntityGroup:hover .centralHaloCircle {
+  filter: drop-shadow(0 0 10px rgba(2, 132, 199, 0.6));
+}
+
+.centralEntityGroup:hover .centralCoreCircle {
+  filter: brightness(1.2) drop-shadow(0 0 10px rgba(2, 132, 199, 0.9));
+}
+
+.centralBadgeUser {
+  font-size: 11px;
+  font-weight: 800;
+  font-family: var(--font-sans), sans-serif;
+}
+
+.badgeUserLight {
+  fill: #0f172a;
+}
+
+.centralBadgeSub {
+  font-size: 8.5px;
+  font-weight: 700;
+  font-family: var(--font-mono), monospace;
+}
+
+.badgeSubLight {
+  fill: #0284c7;
+}
+
+/* ==========================================================================
+   3. FLOATING TIMELINE DOCK (Apple / Linear / Stripe grade UI/UX)
+   ========================================================================== */
+.timelineDockContainer {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  pointer-events: none;
+  width: auto;
+  max-width: 92%;
+  animation: dockSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes dockSlideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 12px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.timelineDock {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.03);
+  padding: 8px 16px;
+  border-radius: 9999px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timelineDock:hover {
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.11), 0 3px 8px rgba(0, 0, 0, 0.04);
+  border-color: rgba(203, 213, 225, 0.95);
+}
+
+/* Circular Play/Pause button */
+.dockPlayBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #0284c7;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);
+  flex-shrink: 0;
+}
+
+.dockPlayBtn:hover {
+  background: #0369a1;
+  transform: scale(1.06);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.45);
+}
+
+.dockPlayBtnActive {
+  background: #0f172a !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.35) !important;
+}
+
+/* Timeframe Segmented Scope Selector (12 Hours, 24 Hours, 48 Hours) */
+.timeframeSegmentedWrap {
+  display: inline-flex;
+  align-items: center;
+  background: #f1f5f9;
+  padding: 3px;
+  border-radius: 9999px;
+  border: 1px solid #e2e8f0;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.timeframeOptionBtn {
+  border: none;
+  background: transparent;
+  color: #64748b;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.timeframeOptionBtn:hover {
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.timeframeOptionActive {
+  background: #0f172a !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.22);
+}
+
+.timeframeShortLabel {
+  display: none;
+}
+
+.timeframeFullLabel {
+  display: inline;
+}
+
+@media (max-width: 1250px) {
+  .timeframeShortLabel {
+    display: inline;
+  }
+  .timeframeFullLabel {
+    display: none;
+  }
+}
+
+/* Time display in dock */
+.dockTimeGroup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 62px;
+}
+
+.dockTimeValue {
+  font-size: 0.84rem;
+  font-weight: 800;
+  font-family: var(--font-mono), monospace;
+  color: #0f172a;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.dockTimeSub {
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: #64748b;
+  line-height: 1.1;
+}
+
+.dockDivider {
+  width: 1px;
+  height: 22px;
+  background: #e2e8f0;
+  flex-shrink: 0;
+}
+
+/* Scrubber Slider Wrap */
+.dockSliderWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sliderBoundLabel {
+  font-size: 0.65rem;
+  font-family: var(--font-mono), monospace;
+  font-weight: 600;
+  color: #94a3b8;
+  user-select: none;
+}
+
+.sliderTrackWrapper {
+  position: relative;
+  width: 220px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #e2e8f0;
+  display: flex;
+  align-items: center;
+}
+
+.sliderProgressFill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #0284c7 0%, #38bdf8 100%);
+  pointer-events: none;
+  transition: width 0.12s ease;
+}
+
+.dockRangeInput {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 2;
+  outline: none;
+}
+
+.dockRangeInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #0284c7;
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+  cursor: grab;
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+
+.dockRangeInput::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: #0369a1;
+}
+
+.dockRangeInput::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(1.25);
+}
+
+.dockRangeInput::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #0284c7;
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+  cursor: grab;
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+
+/* Active Count Badge */
+.dockCountBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-family: var(--font-sans);
+  white-space: nowrap;
+}
+
+.countDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+.countText {
+  color: #64748b;
+}
+
+.countText strong {
+  color: #0f172a;
+  font-weight: 800;
+  font-family: var(--font-mono), monospace;
+}
+
+.dockVolSeparator {
+  color: #cbd5e1;
+  font-weight: 400;
+  margin: 0 4px;
+}
+
+/* Speed Button */
+.dockSpeedBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 9px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+  font-size: 0.72rem;
+  font-weight: 800;
+  font-family: var(--font-mono), monospace;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dockSpeedBtn:hover {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+}
+
+/* ==========================================================================
+   FRAUDULENT PIPELINE TRACER & TERMINAL RECIPIENT STYLES
+   ========================================================================== */
+
+.fraudTraceBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(225, 29, 72, 0.08);
+  border: 1px solid rgba(225, 29, 72, 0.35);
+  color: #e11d48;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: var(--font-sans);
+}
+
+.fraudTraceBtn:hover {
+  background: rgba(225, 29, 72, 0.15);
+  border-color: #e11d48;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(225, 29, 72, 0.2);
+}
+
+.fraudTraceBtnActive {
+  background: #e11d48 !important;
+  color: #ffffff !important;
+  border-color: #be123c !important;
+  box-shadow: 0 0 12px rgba(225, 29, 72, 0.4);
+}
+
+.fraudTraceBtnDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e11d48;
+  animation: pulseFraudBeacon 1.2s infinite ease-in-out;
+}
+
+.fraudTraceBtnActive .fraudTraceBtnDot {
+  background: #ffffff;
+}
+
+@keyframes pulseFraudBeacon {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.6);
+    opacity: 0.6;
+  }
+}
+
+/* Floating Terminal Recipient Forensic Card */
+.terminalTraceCard {
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  z-index: 30;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid rgba(225, 29, 72, 0.4);
+  border-radius: 14px;
+  padding: 12px 16px;
+  box-shadow: 0 8px 30px rgba(225, 29, 72, 0.12), 0 2px 10px rgba(0, 0, 0, 0.05);
+  max-width: 420px;
+  width: calc(100% - 36px);
+  animation: cardSlideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: auto;
+}
+
+@keyframes cardSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.traceCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(225, 29, 72, 0.12);
+  padding-bottom: 6px;
+}
+
+.traceCardTitleGroup {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.traceCardIconBox {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: rgba(225, 29, 72, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e11d48;
+}
+
+.traceCardTitle {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #be123c;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.traceCardBadge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  background: #e11d48;
+  color: #ffffff;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+}
+
+.traceCardMulePath {
+  font-size: 0.68rem;
+  color: #64748b;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 5px 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.tracePathStep {
+  font-weight: 600;
+  color: #334155;
+}
+
+.tracePathArrow {
+  color: #e11d48;
+  font-weight: 900;
+}
+
+.tracePathFinal {
+  font-weight: 800;
+  color: #e11d48;
+  background: rgba(225, 29, 72, 0.08);
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+.traceCardDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.traceDetailRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-size: 0.74rem;
+}
+
+.traceDetailLabel {
+  color: #64748b;
+  font-weight: 600;
+}
+
+.traceDetailValue {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.traceDetailValueRed {
+  color: #e11d48;
+  font-weight: 800;
+}
+
+.traceCardActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.traceActionPrimary {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.traceActionPrimary:hover {
+  background: #1e293b;
+  transform: translateY(-1px);
+}
+
+.traceActionFreeze {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: #e11d48;
+  color: #ffffff;
+  border: none;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.traceActionFreeze:hover {
+  background: #be123c;
+  transform: translateY(-1px);
+}
+
+.traceActionFrozen {
+  background: #059669 !important;
+  color: #ffffff !important;
+}
+
+.traceActionCopy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 6px 9px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.traceActionCopy:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+/* SVG Laser & Radar Animations */
+.animatedFraudLaserPath {
+  stroke-dasharray: 6 4;
+  animation: fraudLaserDash 1.2s linear infinite;
+}
+
+@keyframes fraudLaserDash {
+  from {
+    stroke-dashoffset: 20;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animatedSubFraudPath {
+  stroke-dasharray: 5 3.5;
+  animation: subFraudLaserDash 1.8s linear infinite;
+}
+
+@keyframes subFraudLaserDash {
+  from {
+    stroke-dashoffset: 17;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ==========================================================================
+   TRIBUTARY INCOMING TRANSACTIONS (ON LEFT OF EACH DOT)
+   ========================================================================== */
+.tributaryGroup {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.tributaryPath {
+  stroke-linecap: round;
+  transition: stroke-width 0.18s ease, stroke-opacity 0.18s ease;
+}
+
+.animatedTributaryPath {
+  stroke-dasharray: 6 4;
+  animation: tributaryFlow 2.4s linear infinite;
+}
+
+@keyframes tributaryFlow {
+  from {
+    stroke-dashoffset: 20;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.tributaryInletCircle {
+  transition: r 0.18s ease, fill 0.18s ease, stroke 0.18s ease;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.15));
+}
+
+.tributaryLabelGroup {
+  pointer-events: none;
+  user-select: none;
+}
+
+.tributarySourceTitle {
+  font-family: var(--font-sans);
+  font-size: 8.5px;
+  font-weight: 800;
+  fill: #0f172a;
+  letter-spacing: -0.01em;
+  paint-order: stroke fill;
+  stroke: #ffffff;
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+}
+
+.tributarySourceMeta {
+  font-family: var(--font-sans);
+  font-size: 7.5px;
+  font-weight: 600;
+  fill: #475569;
+  paint-order: stroke fill;
+  stroke: #ffffff;
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+/* Floating Tributary Info Tooltip */
+.tributaryTooltipBox {
+  position: absolute;
+  z-index: 40;
+  background: rgba(15, 23, 42, 0.94);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 6px 10px;
+  color: #ffffff;
+  font-size: 0.72rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  animation: cardSlideDown 0.15s ease forwards;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tributaryTooltipHeader {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  color: #38bdf8;
+  font-size: 0.74rem;
+}
+
+.tributaryTooltipMeta {
+  font-size: 0.68rem;
+  color: #cbd5e1;
+}
+
+.terminalRadarRing1 {
+  animation: radarPulse1 1.8s infinite cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: center;
+}
+
+.terminalRadarRing2 {
+  animation: radarPulse2 2.2s infinite cubic-bezier(0.16, 1, 0.3, 1);
+  animation-delay: 0.4s;
+  transform-origin: center;
+}
+
+@keyframes radarPulse1 {
+  0% {
+    r: 10px;
+    opacity: 0.9;
+  }
+  70% {
+    r: 28px;
+    opacity: 0.15;
+  }
+  100% {
+    r: 34px;
+    opacity: 0;
+  }
+}
+
+@keyframes radarPulse2 {
+  0% {
+    r: 14px;
+    opacity: 0.8;
+  }
+  70% {
+    r: 36px;
+    opacity: 0.1;
+  }
+  100% {
+    r: 44px;
+    opacity: 0;
+  }
+}
+
+.svgTerminalMuleCard {
+  cursor: pointer;
+  filter: drop-shadow(0 4px 12px rgba(225, 29, 72, 0.3));
+  transition: transform 0.2s ease;
+}
+
+.svgTerminalMuleCard:hover {
+  transform: scale(1.02);
+}
+
+/* Toast Notification */
+.toastCopyNotification {
+  position: absolute;
+  bottom: 60px;
+  right: 20px;
+  z-index: 50;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  animation: cardSlideDown 0.2s ease forwards;
+}
+
+/* ==========================================================================
+   MANUAL BAN / UNBAN & FRAUD CONTROL MODAL
+   ========================================================================== */
+.banModalOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: modalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.banModalContainer {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 680px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalScaleUp 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.banModalHeader {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #ffffff;
+}
+
+.banModalTitleGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.banModalIconBox {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #ffe4e6;
+  color: #e11d48;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.banModalHeading {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  font-family: var(--font-sans);
+}
+
+.banModalSubheading {
+  font-size: 0.73rem;
+  color: #64748b;
+  margin: 2px 0 0 0;
+  font-family: var(--font-sans);
+}
+
+.banModalCloseBtn {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.banModalCloseBtn:hover {
+  background: #fee2e2;
+  border-color: #fecdd3;
+  color: #e11d48;
+}
+
+/* Master Actions Bar */
+.banMasterActionsBar {
+  padding: 10px 20px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.banMasterLeft {
+  display: flex;
+  align-items: center;
+}
+
+.banMasterLabel {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #475569;
+}
+
+.banMasterRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.banMasterBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #fee2e2;
+  border: 1px solid #fecdd3;
+  color: #be123c;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.banMasterBtn:hover {
+  background: #fecdd3;
+}
+
+.banMasterBtnActive {
+  background: #fdf2f8 !important;
+  border-color: #fbcfe8 !important;
+  color: #9d174d !important;
+}
+
+.freezeMasterBtnActive {
+  background: #dcfce7 !important;
+  border-color: #86efac !important;
+  color: #15803d !important;
+}
+
+.syncMasterBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.syncMasterBtn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+/* Account List inside Modal */
+.banAccountList {
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  max-height: 52vh;
+}
+
+.banAccountItem {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  transition: all 0.18s ease;
+}
+
+.banAccountItem:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.banAccountTarget {
+  border-color: #fca5a5 !important;
+  background: #fff8f8 !important;
+}
+
+.banAccountIsBanned {
+  border-left: 4px solid #e11d48 !important;
+}
+
+.banAccountMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+
+.banAccountHeaderRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.banAccountRole {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.banTargetBadge {
+  font-size: 0.64rem;
+  font-weight: 800;
+  background: #e11d48;
+  color: #ffffff;
+  padding: 1.5px 6px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+}
+
+.banBannedBadge {
+  font-size: 0.64rem;
+  font-weight: 800;
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 1.5px 6px;
+  border-radius: 9999px;
+}
+
+.banFrozenBadge {
+  font-size: 0.64rem;
+  font-weight: 800;
+  background: #dcfce7;
+  color: #15803d;
+  padding: 1.5px 6px;
+  border-radius: 9999px;
+}
+
+.banAccountName {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.banAccountDetails {
+  font-size: 0.72rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.banAccountAmount {
+  font-weight: 800;
+  color: #e11d48;
+}
+
+.banAccountReason {
+  font-size: 0.69rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.banAccountActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.nodeBanToggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 5px 9px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+}
+
+.nodeBanActive {
+  background: #fdf2f8;
+  border-color: #fbcfe8;
+  color: #9d174d;
+}
+
+.nodeBanActive:hover {
+  background: #fce7f3;
+}
+
+.nodeBanInactive {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+.nodeBanInactive:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #e11d48;
+}
+
+.nodeFreezeToggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 5px 9px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+}
+
+.nodeFreezeActive {
+  background: #f0fdf4;
+  border-color: #86efac;
+  color: #166534;
+}
+
+.nodeFreezeActive:hover {
+  background: #dcfce7;
+}
+
+.nodeFreezeInactive {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+.nodeFreezeInactive:hover {
+  background: #f0fdf4;
+  border-color: #86efac;
+  color: #166534;
+}
+
+/* Modal Footer */
+.banModalFooter {
+  padding: 12px 20px;
+  border-top: 1px solid #f1f5f9;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.banModalSummary {
+  font-size: 0.72rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.banModalSummary strong {
+  color: #0f172a;
+}
+
+.banModalDoneBtn {
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.banModalDoneBtn:hover {
+  background: #1e293b;
+}
+
+@media (max-width: 768px) {
+  .sliderTrackWrapper {
+    width: 140px;
+  }
+  .timelineDock {
+    gap: 8px;
+    padding: 6px 12px;
+  }
+  .terminalTraceCard {
+    max-width: 92%;
+    left: 4%;
+  }
+}
