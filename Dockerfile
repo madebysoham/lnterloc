@@ -2,7 +2,7 @@ FROM python:3.11-slim
 
 ENV PYTHONUNBUFFERED=1 \
     DEBIAN_FRONTEND=noninteractive \
-    PORT=7860 \
+    PORT=10000 \
     HOME=/home/user
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -24,6 +24,7 @@ COPY --chown=user:user backend /app/backend
 COPY --chown=user:user ml /app/ml
 COPY --chown=user:user docs /app/docs
 
+EXPOSE 10000
 EXPOSE 7860
 
-CMD ["uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--port", "7860"]
+CMD ["sh", "-c", "uvicorn backend.app.main:app --host 0.0.0.0 --port ${PORT:-10000}"]

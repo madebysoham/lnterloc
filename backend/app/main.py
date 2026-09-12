@@ -53,7 +53,18 @@ app.include_router(graph_router)
 app.include_router(mock_router)
 
 
+@app.api_route("/", methods=["GET", "HEAD"], tags=["Health & Metrics"])
+async def root():
+    """Root health check for load balancers and deployment scanners."""
+    return {
+        "status": "healthy",
+        "service": "interloc-core-decision-engine",
+        "version": "1.0.0",
+    }
+
+
 @app.get("/health", tags=["Health & Metrics"])
+@app.get("/healthz", tags=["Health & Metrics"])
 async def health_check():
     """Liveness probe verifying sub-45ms engine readiness."""
     return {
