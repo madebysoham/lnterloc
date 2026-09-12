@@ -66,6 +66,15 @@
   white-space: nowrap;
 }
 
+.brandSeparator {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: #cbd5e1;
+  line-height: 1;
+  user-select: none;
+  flex-shrink: 0;
+}
+
 /* Mobile Switcher */
 .mobileViewSwitcher {
   display: none;

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import styles from "./SplitLayout.module.css";
 import { MobileSimulator } from "@/components/MobileSimulator/MobileSimulator";
 import { RightWorkspace } from "@/components/RightWorkspace/RightWorkspace";
@@ -93,11 +94,17 @@ export const SplitLayout: React.FC = () => {
       {/* Top Application Header */}
       <header className={styles.topNavbar}>
         <div className={styles.brandGroup}>
-          <div className={styles.logoIcon}>
-            <Shield size={16} strokeWidth={2.5} />
-          </div>
+          <Image
+            src="/logo.png"
+            alt="InterLoc Logo"
+            width={100}
+            height={100}
+            style={{ objectFit: "contain", borderRadius: "10px" }}
+            priority
+          />
+          <span className={styles.brandSeparator}>|</span>
           <div className={styles.brandTitle}>
-            <span>ECLIPSE</span>
+            <span>InterLoc</span>
             <span className={styles.brandBadge}>FRAUD INTERCEPTOR</span>
           </div>
         </div>
