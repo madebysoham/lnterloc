@@ -5,9 +5,10 @@
  * if NEXT_PUBLIC_API_URL is not defined in the environment.
  */
 
-export const API_BASE_URL: string =
+export const API_BASE_URL: string = (
   (typeof process !== "undefined" && process.env?.NEXT_PUBLIC_API_URL) ||
-  "http://localhost:8000";
+  "http://localhost:8000"
+).replace(/\/+$/, "");
 
 // Standard Switch Endpoints matching docs/API_AND_INTEGRATION_CONTRACT.md
 export const ENDPOINTS = {
